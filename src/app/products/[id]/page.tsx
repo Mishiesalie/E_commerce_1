@@ -1,10 +1,10 @@
 'use client';
 
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import Navigation from '@/components/Navigation';
 import Cart from '@/components/Cart';
 import { useCartStore } from '@/store/cart';
-import { useParams } from 'next/navigation';
 
 const products = [
   {
@@ -120,7 +120,6 @@ export default function ProductDetailPage() {
   const params = useParams();
   const productId = Number(params.id);
   const product = products.find(p => p.id === productId);
-  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   if (!product) {
     return (
@@ -135,27 +134,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-1 flex items-center">
-              <a href="/" className="text-2xl font-bold text-gray-900">
-                ShopStyle
-              </a>
-            </div>
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="p-2 hover:bg-gray-100 rounded-full relative"
-            >
-              <ShoppingCartIcon className="h-6 w-6 text-gray-600" />
-              <span className="absolute top-0 right-0 h-4 w-4 bg-blue-600 rounded-full text-xs text-white flex items-center justify-center">
-                {itemCount}
-              </span>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navigation onCartClick={() => setIsCartOpen(true)} />
 
       {/* Product Detail */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
